@@ -13,3 +13,7 @@ Si quieres aumentar la potencia, te recomiendo hacer varias sesiones o usar un V
 Los bloqueos de DDOS PROTECCION
 
 (HERRAMIENTA HECHA PARA PROBAR WEBS, SI ATACAS EL SITIO WEB DE OTRA PERSONA CON ESTO, SERÁ TU CULPA Y RESPONSABILIDAD.)
+
+
+Command: node dos_combined.js 100 example.com 80 100
+(put the threads you want it to have and the web port and the seconds that the script will run)
