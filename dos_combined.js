@@ -9,7 +9,7 @@ const PORT = parseInt(process.argv[4]);
 const DURATION = parseInt(process.argv[5]);
 
 if (process.argv.length !== 6) {
-  console.log('Command: node script.js <hilos> <host> <puerto> <duracion_seg>');
+  console.log('Command: node script.js <threads> <host> <port> <duration_sec>');
   process.exit(1);
 }
 
